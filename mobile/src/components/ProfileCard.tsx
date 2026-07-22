@@ -21,8 +21,11 @@ export function ProfileCard({ profile }: { profile: Profile }) {
           <Text className="text-xs font-bold text-emerald">Compatible</Text>
         </View>
       </View>
+      <View className="mt-4 rounded-2xl bg-mist p-4">
+        <Text className="mb-2 text-base font-extrabold text-ink">About Me</Text>
+        <Text className="text-[15px] leading-6 text-slate-600">{profile.bio}</Text>
+      </View>
       <View className="mt-4 flex-row flex-wrap">{profile.compatibility.common.slice(0, 4).map((item, index) => <Chip key={item} label={item} tone={index % 2 ? "blue" : "green"} />)}</View>
-      <Text className="mt-5 rounded-2xl bg-mist p-4 text-[15px] leading-6 text-slate-600">{profile.bio}</Text>
     </View>
   </View>;
 }
