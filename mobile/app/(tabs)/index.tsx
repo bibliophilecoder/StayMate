@@ -1,3 +1,54 @@
-import { Ionicons } from "@expo/vector-icons";import { router } from "expo-router";import { Pressable,ScrollView,Text,View } from "react-native";import { SafeAreaView } from "react-native-safe-area-context";import { ProfileCard } from "@/components/ProfileCard";import { useApp } from "@/context/AppContext";
-export default function Discover(){const{profiles,index,swipe,toggleBookmark,bookmarks}=useApp();const profile=profiles[index%profiles.length];return <SafeAreaView className="flex-1 bg-mist"><View className="flex-row items-center justify-between px-6 py-3"><Text className="text-3xl font-black text-primary">StayMate⌂</Text><View className="flex-row gap-4"><Pressable onPress={()=>router.push("/filters")}><Ionicons name="options-outline" size={25} color="#13213C"/></Pressable><Ionicons name="notifications-outline" size={25} color="#13213C"/></View></View><ScrollView contentContainerClassName="px-5 pb-6" showsVerticalScrollIndicator={false}><View className="mb-4 items-center"><Text className="rounded-full border border-indigo-100 bg-white px-5 py-3 font-bold text-primary">✦ Find your perfect roommate</Text></View><Pressable onPress={()=>router.push({pathname:"/profile/[id]",params:{id:profile.id}})}><ProfileCard profile={profile}/></Pressable><View className="mt-5 flex-row items-center justify-center gap-7"><Pressable onPress={()=>swipe(false)} className="h-16 w-16 items-center justify-center rounded-full bg-white shadow"><Ionicons name="close" size={32} color="#5267E8"/></Pressable><Pressable onPress={()=>swipe(true)} className="h-20 w-20 items-center justify-center rounded-full bg-primary shadow"><Ionicons name="heart" size={36} color="white"/></Pressable><Pressable onPress={()=>toggleBookmark(profile.id)} className="h-16 w-16 items-center justify-center rounded-full bg-white shadow"><Ionicons name={bookmarks.includes(profile.id)?"bookmark":"bookmark-outline"} size={27} color="#20A464"/></Pressable></View></ScrollView></SafeAreaView>}
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useMemo, useRef } from "react";
+import { Animated, Dimensions, PanResponder, Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ProfileCard } from "@/components/ProfileCard";
+import { useApp } from "@/context/AppContext";
 
+const screenWidth = Dimensions.get("window").width;
+
+export default function Discover() {
+  const { profiles, index, swipe, toggleBookmark, bookmarks } = useApp();
+  const profile = profiles[index % profiles.length];
+  const position = useRef(new Animated.ValueXY()).current;
+  const rotate = position.x.interpolate({ inputRange: [-screenWidth, 0, screenWidth], outputRange: ["-10deg", "0deg", "10deg"] });
+
+  const finishSwipe = (liked: boolean) => {
+    Animated.timing(position, { toValue: { x: liked ? screenWidth * 1.3 : -screenWidth * 1.3, y: 0 }, duration: 220, useNativeDriver: true }).start(() => {
+      position.setValue({ x: 0, y: 0 });
+      void swipe(liked);
+    });
+  };
+
+  const panResponder = useMemo(() => PanResponder.create({
+    onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dx) > 8 && Math.abs(gesture.dx) > Math.abs(gesture.dy),
+    onPanResponderMove: Animated.event([null, { dx: position.x, dy: position.y }], { useNativeDriver: false }),
+    onPanResponderRelease: (_, gesture) => {
+      if (Math.abs(gesture.dx) > 90) finishSwipe(gesture.dx > 0);
+      else Animated.spring(position, { toValue: { x: 0, y: 0 }, useNativeDriver: true }).start();
+    },
+    onPanResponderTerminate: () => Animated.spring(position, { toValue: { x: 0, y: 0 }, useNativeDriver: true }).start(),
+  }), [position, profile?.id]);
+
+  if (!profile) return <SafeAreaView className="flex-1 items-center justify-center bg-mist"><Text className="text-slate-500">No profiles available.</Text></SafeAreaView>;
+
+  return <SafeAreaView className="flex-1 bg-mist">
+    <View className="flex-row items-center justify-between px-6 py-3">
+      <Text className="text-3xl font-black text-primary">StayMate⌂</Text>
+      <View className="flex-row gap-4"><Pressable onPress={() => router.push("/filters")}><Ionicons name="options-outline" size={25} color="#13213C" /></Pressable><Ionicons name="notifications-outline" size={25} color="#13213C" /></View>
+    </View>
+    <ScrollView contentContainerClassName="px-5 pb-6" showsVerticalScrollIndicator={false}>
+      <View className="mb-4 items-center"><Text className="rounded-full border border-indigo-100 bg-white px-5 py-3 font-bold text-primary">✦ Find your perfect roommate</Text></View>
+      <Animated.View {...panResponder.panHandlers} style={{ transform: [{ translateX: position.x }, { translateY: position.y }, { rotate }] }}>
+        <Pressable onPress={() => router.push({ pathname: "/profile/[id]", params: { id: profile.id } })}><ProfileCard profile={profile} /></Pressable>
+      </Animated.View>
+      <Text className="mt-3 text-center text-xs font-semibold text-slate-400">Swipe left to pass · Swipe right to like</Text>
+      <View className="mt-4 flex-row items-center justify-center gap-7">
+        <Pressable onPress={() => finishSwipe(false)} className="h-16 w-16 items-center justify-center rounded-full bg-white shadow"><Ionicons name="close" size={32} color="#5267E8" /></Pressable>
+        <Pressable onPress={() => finishSwipe(true)} className="h-20 w-20 items-center justify-center rounded-full bg-primary shadow"><Ionicons name="heart" size={36} color="white" /></Pressable>
+        <Pressable onPress={() => void toggleBookmark(profile.id)} className="h-16 w-16 items-center justify-center rounded-full bg-white shadow"><Ionicons name={bookmarks.includes(profile.id) ? "bookmark" : "bookmark-outline"} size={27} color="#20A464" /></Pressable>
+      </View>
+    </ScrollView>
+  </SafeAreaView>;
+}

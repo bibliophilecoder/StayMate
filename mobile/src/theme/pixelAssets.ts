@@ -13,6 +13,7 @@ const avatars: ImageSource[] = [
 const namedAvatars: Record<string, ImageSource> = {
   riya: avatars[0], arjun: avatars[1], aanya: avatars[2],
   kabir: avatars[3], meera: avatars[4], dev: avatars[5],
+  isha: avatars[0], rohan: avatars[1],
 };
 
 function stableIndex(value: string) {

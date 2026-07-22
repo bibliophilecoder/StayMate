@@ -7,10 +7,10 @@ import { Chip } from "./ui";
 
 export function ProfileCard({ profile }: { profile: Profile }) {
   return <View className="overflow-hidden rounded-card border border-slate-100 bg-white shadow-lg">
-    <View className="h-[320px] items-center justify-end bg-[#FFF9F2]">
+    <View className="h-[320px] items-center justify-center overflow-hidden bg-[#FFF9F2]">
       <View className="absolute left-7 top-7 h-3 w-3 bg-lavender" />
       <View className="absolute right-9 top-14 h-2 w-2 bg-green-100" />
-      <Image source={profileArtwork(profile)} contentFit="contain" style={{ height: 300, width: "92%" }} />
+      <Image source={profileArtwork(profile)} contentFit="contain" style={{ height: 278, width: "86%" }} />
     </View>
     <View className="p-5">
       <View className="flex-row items-start justify-between">
