@@ -22,12 +22,16 @@ export default function Discover() {
   };
 
   const panResponder = useMemo(() => PanResponder.create({
+    onMoveShouldSetPanResponderCapture: (_, gesture) => Math.abs(gesture.dx) > 6 && Math.abs(gesture.dx) > Math.abs(gesture.dy),
     onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dx) > 8 && Math.abs(gesture.dx) > Math.abs(gesture.dy),
+    onPanResponderGrant: () => position.setOffset({ x: 0, y: 0 }),
     onPanResponderMove: Animated.event([null, { dx: position.x, dy: position.y }], { useNativeDriver: false }),
     onPanResponderRelease: (_, gesture) => {
-      if (Math.abs(gesture.dx) > 90) finishSwipe(gesture.dx > 0);
+      if (Math.abs(gesture.dx) > 75 || Math.abs(gesture.vx) > 0.45) finishSwipe(gesture.dx > 0 || gesture.vx > 0);
       else Animated.spring(position, { toValue: { x: 0, y: 0 }, useNativeDriver: true }).start();
     },
+    onPanResponderTerminationRequest: () => false,
+    onShouldBlockNativeResponder: () => true,
     onPanResponderTerminate: () => Animated.spring(position, { toValue: { x: 0, y: 0 }, useNativeDriver: true }).start(),
   }), [position, profile?.id]);
 
