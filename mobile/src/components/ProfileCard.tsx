@@ -11,6 +11,7 @@ export function ProfileCard({ profile }: { profile: Profile }) {
       <View className="absolute left-7 top-7 h-3 w-3 bg-lavender" />
       <View className="absolute right-9 top-14 h-2 w-2 bg-green-100" />
       <Image source={profileArtwork(profile)} contentFit="contain" style={{ height: 278, width: "86%" }} />
+      <View pointerEvents="none" className="absolute bottom-0 left-0 right-0 h-3 bg-[#FFF9F2]" />
     </View>
     <View className="p-5">
       <View className="flex-row items-start justify-between">

@@ -40,8 +40,11 @@ export default function Questionnaire() {
           {group.items.map(item => {
             const active = selected[group.title] === item;
             return <Pressable key={item} onPress={() => setSelected(current => ({ ...current, [group.title]: item }))} className={`mb-1 flex-row items-center rounded-2xl border px-3 py-2 ${active ? "border-indigo-100 bg-lavender" : "border-transparent bg-white"}`}>
-              <View className="h-12 w-12 items-center justify-center rounded-xl bg-[#FFF9F2]">
-                <Image source={lifestyleArtwork(item)} contentFit="contain" style={{ width: 40, height: 40 }} />
+              <View className="h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-[#FFF9F2]">
+                <Image source={lifestyleArtwork(item)} contentFit="contain" style={{ width: 42, height: 42 }} />
+                {/* The generated sprite cells contain a few edge pixels from neighbouring cells. */}
+                <View pointerEvents="none" className="absolute bottom-0 left-0 right-0 h-[5px] bg-[#FFF9F2]" />
+                <View pointerEvents="none" className="absolute bottom-0 right-0 top-0 w-[5px] bg-[#FFF9F2]" />
               </View>
               <Text className={`ml-3 flex-1 text-base ${active ? "font-bold text-primary" : "text-ink"}`}>{item}</Text>
               <Ionicons name={active ? "checkbox" : "square-outline"} size={23} color={active ? "#5267E8" : "#94A3B8"} />
