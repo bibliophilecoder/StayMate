@@ -10,6 +10,12 @@ const avatars: ImageSource[] = [
   require("../../assets/avatars/avatar-dev.png"),
 ];
 
+const roomBackgrounds: ImageSource[] = [
+  require("../../assets/images/staymate-room.png"),
+  require("../../assets/images/staymate-bedroom.png"),
+  require("../../assets/images/staymate-reading-nook.png"),
+];
+
 const namedAvatars: Record<string, ImageSource> = {
   riya: avatars[0], arjun: avatars[1], aanya: avatars[2],
   kabir: avatars[3], meera: avatars[4], dev: avatars[5],
@@ -32,6 +38,11 @@ export function fallbackAvatar(id?: string, name?: string, imageUrl?: string): I
   if (imageUrl) return { uri: imageUrl };
   const key = (name ?? "").trim().toLowerCase();
   return namedAvatars[key] ?? avatars[stableIndex(id || key || "staymate")];
+}
+
+export function profileRoom(id?: string, name?: string): ImageSource {
+  const key = `${id ?? ""}-${name ?? ""}`.toLowerCase();
+  return roomBackgrounds[stableIndex(key) % roomBackgrounds.length];
 }
 
 const lifestyleIcons: Record<string, ImageSource> = {
