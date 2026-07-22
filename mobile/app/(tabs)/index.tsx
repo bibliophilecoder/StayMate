@@ -42,17 +42,17 @@ export default function Discover() {
       <Text className="text-3xl font-black text-primary">StayMate⌂</Text>
       <View className="flex-row gap-4"><Pressable onPress={() => router.push("/filters")}><Ionicons name="options-outline" size={25} color="#13213C" /></Pressable><Ionicons name="notifications-outline" size={25} color="#13213C" /></View>
     </View>
-    <ScrollView contentContainerClassName="px-5 pb-6" showsVerticalScrollIndicator={false}>
+    <ScrollView contentContainerClassName="px-5 pb-32" showsVerticalScrollIndicator={false}>
       <View className="mb-4 items-center"><Text className="rounded-full border border-indigo-100 bg-white px-5 py-3 font-bold text-primary">✦ Find your perfect roommate</Text></View>
       <Animated.View {...panResponder.panHandlers} style={{ transform: [{ translateX: position.x }, { translateY: position.y }, { rotate }] }}>
         <Pressable onPress={() => router.push({ pathname: "/profile/[id]", params: { id: profile.id } })}><ProfileCard profile={profile} /></Pressable>
       </Animated.View>
       <Text className="mt-3 text-center text-xs font-semibold text-slate-400">Swipe left to pass · Swipe right to like</Text>
-      <View className="mt-4 flex-row items-center justify-center gap-7">
+    </ScrollView>
+    <View className="absolute bottom-2 left-5 right-5 flex-row items-center justify-center gap-7 rounded-[32px] border border-slate-100 bg-white/95 px-5 py-3 shadow-lg">
         <Pressable onPress={() => finishSwipe(false)} className="h-16 w-16 items-center justify-center rounded-full bg-white shadow"><Ionicons name="close" size={32} color="#5267E8" /></Pressable>
         <Pressable onPress={() => finishSwipe(true)} className="h-20 w-20 items-center justify-center rounded-full bg-primary shadow"><Ionicons name="heart" size={36} color="white" /></Pressable>
         <Pressable onPress={() => void toggleBookmark(profile.id)} className="h-16 w-16 items-center justify-center rounded-full bg-white shadow"><Ionicons name={bookmarks.includes(profile.id) ? "bookmark" : "bookmark-outline"} size={27} color="#20A464" /></Pressable>
-      </View>
-    </ScrollView>
+    </View>
   </SafeAreaView>;
 }
