@@ -1,1 +1,38 @@
-{ "cli": { "version": ">= 16.0.0" }, "build": { "development": { "developmentClient": true, "distribution": "internal" }, "preview": { "distribution": "internal", "android": { "buildType": "apk" } }, "production": { "autoIncrement": true } } }
+{
+  "cli": {
+    "version": ">= 16.0.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://staymate-api.onrender.com/api",
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyDc1S9gfa2eG9GDvlTXKglkNeBj0N9d1BI",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "staymate-29ca8.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "staymate-29ca8",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:962359332636:web:1bfb4fcff5a50fc4e234d9",
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "962359332636-ir58sqatb86qreu5elvkukp5cr0gbcba.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "962359332636-ssd9pa3ha42t3dnk0vco3oug7vo65a9a.apps.googleusercontent.com"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://staymate-api.onrender.com/api",
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyDc1S9gfa2eG9GDvlTXKglkNeBj0N9d1BI",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "staymate-29ca8.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "staymate-29ca8",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:962359332636:web:1bfb4fcff5a50fc4e234d9",
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "962359332636-ir58sqatb86qreu5elvkukp5cr0gbcba.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "962359332636-ssd9pa3ha42t3dnk0vco3oug7vo65a9a.apps.googleusercontent.com"
+      }
+    }
+  }
+}
