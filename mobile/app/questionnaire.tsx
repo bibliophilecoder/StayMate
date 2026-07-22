@@ -6,6 +6,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Card } from "@/components/ui";
 import { lifestyleArtwork } from "@/theme/pixelAssets";
+import { useApp } from "@/context/AppContext";
 
 const groups = [
   { title: "Food", items: ["Vegetarian", "Non-Vegetarian", "Vegan", "Jain"] },
@@ -19,13 +20,16 @@ const groups = [
 ];
 
 export default function Questionnaire() {
-  const [selected, setSelected] = useState<Record<string, string>>({ Food: "Vegetarian", "Sleep schedule": "Early sleeper" });
+  const { preferences, savePreferences } = useApp();
+  const [saving, setSaving] = useState(false);
+  const [selected, setSelected] = useState<Record<string, string>>({ Food: preferences.food ?? "Vegetarian", "Sleep schedule": preferences.sleep ?? "Early sleeper", "Social personality": preferences.social ?? "Ambivert", "Party lifestyle": preferences.party ?? "Homebody", Cooking: preferences.cooking ?? "Can cook", Guests: preferences.guests ?? "Sometimes", "Work style": preferences.workStyle ?? "Hybrid", Pets: preferences.pets ?? "Okay" });
+  const save = async () => { setSaving(true); await savePreferences({ food: selected.Food, sleep: selected["Sleep schedule"], social: selected["Social personality"], party: selected["Party lifestyle"], cooking: selected.Cooking, guests: selected.Guests, workStyle: selected["Work style"], pets: selected.Pets }); setSaving(false); router.back(); };
 
   return <SafeAreaView className="flex-1 bg-mist">
     <View className="flex-row items-center justify-between px-5 py-4">
       <Pressable onPress={() => router.back()}><Ionicons name="arrow-back" size={25} /></Pressable>
       <Text className="text-lg font-extrabold text-ink">Your preferences</Text>
-      <Text className="font-bold text-primary">Save</Text>
+      <Pressable onPress={() => void save()}><Text className="font-bold text-primary">Save</Text></Pressable>
     </View>
     <ScrollView contentContainerClassName="px-5 pb-8">
       <Text className="text-3xl font-black text-ink">Tell us your lifestyle</Text>
@@ -45,7 +49,7 @@ export default function Questionnaire() {
           })}
         </Card>
       </View>)}
-      <Button title="Save preferences" onPress={() => router.back()} />
+      <Button title={saving ? "Saving…" : "Save preferences"} onPress={() => void save()} />
     </ScrollView>
   </SafeAreaView>;
 }
