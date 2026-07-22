@@ -4,7 +4,7 @@ Lifestyle-first roommate matching for students and working professionals. The re
 
 ## Local setup
 
-1. Install Node 20+, then run `npm install` at the repository root.
+1. Install Node 22+, then run `npm install` at the repository root.
 2. Copy `mobile/.env.example` to `mobile/.env` and `server/.env.example` to `server/.env`.
 3. Start the API with `npm run dev:server`.
 4. Start Expo with `npm run dev:mobile`, then scan the QR code in Expo Go.
