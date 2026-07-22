@@ -1,0 +1,8 @@
+import { Ionicons } from "@expo/vector-icons";
+import { PropsWithChildren } from "react";
+import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
+export function Button({title,onPress,secondary=false,icon}:{title:string;onPress?:()=>void;secondary?:boolean;icon?:keyof typeof Ionicons.glyphMap}){return <Pressable onPress={onPress} className={`h-14 flex-row items-center justify-center rounded-2xl ${secondary?"border border-slate-200 bg-white":"bg-primary"}`}>{icon&&<Ionicons name={icon} size={20} color={secondary?"#13213C":"white"}/>}<Text className={`ml-2 text-base font-bold ${secondary?"text-ink":"text-white"}`}>{title}</Text></Pressable>}
+export function Field({label,error,...props}:TextInputProps&{label:string;error?:string}){return <View className="mb-4"><Text className="mb-2 text-sm font-semibold text-ink">{label}</Text><TextInput placeholderTextColor="#94A3B8" className="h-14 rounded-2xl border border-slate-200 bg-white px-4 text-base text-ink" {...props}/>{error&&<Text className="mt-1 text-xs text-red-500">{error}</Text>}</View>}
+export function Chip({label,tone="blue"}:{label:string;tone?:"blue"|"green"|"warm"}){const styles=tone==="green"?"border-green-100 bg-green-50 text-emerald":tone==="warm"?"border-amber-100 bg-amber-50 text-amber-700":"border-indigo-100 bg-lavender text-primary";return <View className={`mr-2 mt-2 rounded-full border px-4 py-2 ${styles}`}><Text className={`text-sm font-semibold ${styles.split(" ").at(-1)}`}>{label}</Text></View>}
+export function Card({children,className=""}:PropsWithChildren<{className?:string}>){return <View className={`rounded-card border border-slate-100 bg-white p-5 shadow-sm ${className}`}>{children}</View>}
+

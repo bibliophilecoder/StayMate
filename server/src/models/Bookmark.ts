@@ -1,0 +1,1 @@
+import { Schema,model } from "mongoose";const schema=new Schema({owner:{type:Schema.Types.ObjectId,ref:"User",required:true},profile:{type:Schema.Types.ObjectId,ref:"User",required:true}},{timestamps:true});schema.index({owner:1,profile:1},{unique:true});export const Bookmark=model("Bookmark",schema);

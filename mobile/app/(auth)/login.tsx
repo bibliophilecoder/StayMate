@@ -1,0 +1,16 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as Google from "expo-auth-session/providers/google";
+import * as WebBrowser from "expo-web-browser";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { Controller,useForm } from "react-hook-form";
+import { KeyboardAvoidingView,Platform,Text,View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { z } from "zod";
+import { Button,Field } from "@/components/ui";
+import { emailLogin, firebaseConfigured, googleLogin } from "@/services/firebase";
+import { useApp } from "@/context/AppContext";
+WebBrowser.maybeCompleteAuthSession();
+const schema=z.object({email:z.email(),password:z.string().min(6)});type Form=z.infer<typeof schema>;
+export default function Login(){const{setAuthenticated,refresh}=useApp();const[submitError,setSubmitError]=useState("");const[busy,setBusy]=useState(false);const[request,response,promptAsync]=Google.useAuthRequest({webClientId:process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,iosClientId:process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,androidClientId:process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID});const{control,handleSubmit,formState:{errors}}=useForm<Form>({resolver:zodResolver(schema),defaultValues:{email:"",password:""}});const finish=async(userPromise:Promise<unknown>)=>{setBusy(true);setSubmitError("");try{await userPromise;setAuthenticated(true);await refresh();router.replace("/(tabs)")}catch(e){setSubmitError(e instanceof Error?e.message:"Sign in failed")}finally{setBusy(false)}};useEffect(()=>{if(response?.type==="success"){const token=response.authentication?.idToken;if(token)void finish(googleLogin(token));else setSubmitError("Google did not return an ID token")}},[response]);return <SafeAreaView className="flex-1 bg-mist"><KeyboardAvoidingView behavior={Platform.OS==="ios"?"padding":undefined} className="flex-1 justify-center px-6"><Text className="text-4xl font-black text-ink">Welcome back</Text><Text className="mb-8 mt-2 text-base text-slate-500">Your next great roommate might be one swipe away.</Text><Controller control={control} name="email" render={({field:{onChange,value}})=><Field label="Email" keyboardType="email-address" autoCapitalize="none" value={value} onChangeText={onChange} error={errors.email?.message}/>}/><Controller control={control} name="password" render={({field:{onChange,value}})=><Field label="Password" secureTextEntry value={value} onChangeText={onChange} error={errors.password?.message}/>}/>{submitError&&<Text className="mb-3 text-sm text-red-500">{submitError}</Text>}<View className="mt-2 gap-3"><Button title={busy?"Signing in…":"Log in"} onPress={handleSubmit(v=>void finish(emailLogin(v.email,v.password)))}/><Button title="Continue with Google" secondary icon="logo-google" onPress={()=>void promptAsync()} /></View>{!firebaseConfigured&&<Text className="mt-4 text-center text-xs text-amber-700">Add Firebase values to mobile/.env to enable sign in.</Text>}<Text onPress={()=>router.push("/(auth)/forgot-password")} className="mt-6 text-center font-semibold text-primary">Forgot password?</Text><Text onPress={()=>router.push("/(auth)/register")} className="mt-4 text-center font-semibold text-primary">Create an account</Text></KeyboardAvoidingView></SafeAreaView>}
+

@@ -1,0 +1,1 @@
+import { Schema,model } from "mongoose";const schema=new Schema({match:{type:Schema.Types.ObjectId,ref:"Match",required:true,index:true},sender:{type:Schema.Types.ObjectId,ref:"User",required:true},text:{type:String,required:true,maxlength:2000},readAt:Date},{timestamps:true});export const Message=model("Message",schema);

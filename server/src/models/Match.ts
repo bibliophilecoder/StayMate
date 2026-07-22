@@ -1,0 +1,1 @@
+import { Schema,model } from "mongoose";const schema=new Schema({users:[{type:Schema.Types.ObjectId,ref:"User",required:true}],compatibility:{overall:Number,lifestyle:Number,budget:Number,location:Number,summary:String,common:[String]},lastMessage:String},{timestamps:true});schema.index({users:1});export const Match=model("Match",schema);

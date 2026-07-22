@@ -1,0 +1,11 @@
+{
+  "name": "staymate",
+  "private": true,
+  "workspaces": ["mobile", "server"],
+  "scripts": {
+    "dev:mobile": "npm --workspace mobile start",
+    "dev:server": "npm --workspace server run dev",
+    "typecheck": "npm --workspace mobile run typecheck && npm --workspace server run typecheck"
+  },
+  "engines": { "node": ">=22" }
+}

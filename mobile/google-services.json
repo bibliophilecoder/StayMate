@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "962359332636",
+    "project_id": "staymate-29ca8",
+    "storage_bucket": "staymate-29ca8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962359332636:android:361f0be80106e423e234d9",
+        "android_client_info": {
+          "package_name": "com.staymate.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962359332636-ssd9pa3ha42t3dnk0vco3oug7vo65a9a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.staymate.app",
+            "certificate_hash": "413b297c7c3f516de61ce896966bb69a81dd5c63"
+          }
+        },
+        {
+          "client_id": "962359332636-ir58sqatb86qreu5elvkukp5cr0gbcba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvOdQQ2cm-860QrFwpzvLGbjpJNYZfsyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962359332636-ir58sqatb86qreu5elvkukp5cr0gbcba.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "962359332636-gmarf44cd9301rjbbihqtlntr8omjivs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.staymate.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

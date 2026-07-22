@@ -1,0 +1,3 @@
+export type Lifestyle = { food: string; sleep: string; cleanliness: number; social: string; party: string; smoking: boolean; drinking: boolean; cooking: string; guests: string; music: string; workStyle: string; pets: string; languages: string[]; privacy: number; sharingFood: boolean; borrowing: boolean; noiseTolerance: number };
+export type Profile = { id: string; name: string; age: number; gender: string; occupation: string; organization: string; city: string; preferredCity: string; budgetMin: number; budgetMax: number; bio: string; image?: string; verified?: boolean; compatibility: { overall: number; lifestyle: number; budget: number; location: number; summary: string; common: string[] }; lifestyle: Lifestyle };
+
