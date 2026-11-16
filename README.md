@@ -2,7 +2,7 @@
 
 > **Find the right roommate, not just a room.**
 
-StayMate is an AI-powered roommate compatibility platform designed to help students, interns, and working professionals find compatible flatmates based on lifestyle, personality, and living preferences rather than just location and budget.
+StayMate is a roommate compatibility platform designed to help students, interns, and working professionals find compatible flatmates based on lifestyle, personality, and living preferences rather than just location and budget.
 
 Unlike traditional roommate platforms, StayMate focuses on reducing conflicts and improving the shared living experience through intelligent compatibility matching.
 
@@ -31,10 +31,8 @@ Users answer questions based on:
 - Sleep Schedule
 - Cleanliness
 - Introvert / Extrovert
-- Smoking & Drinking
 - Cooking Habits
 - Guests Preference
-- Work Schedule
 - Pets
 - Languages
 - Personal Boundaries
